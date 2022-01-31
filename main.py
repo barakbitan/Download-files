@@ -34,8 +34,8 @@ def convert_xml_to_JSON(f_in):
     with open(f_in, 'rb') as myfile:
         obj = xmltodict.parse(myfile.read())
     with open(f_in+'.json', 'w', encoding='utf-8') as f_out:
-        a = json.dumps(obj, ensure_ascii=False)
-        f_out.write(a)
+        convert_json = json.dumps(obj, ensure_ascii=False)
+        f_out.write(convert_json)
 
 today = date.today()
 # mmyydd
@@ -53,5 +53,3 @@ url_supersal = getSuperSalUrl()
 downloadFile(url_mck,'mck')
 downloadFile(url_victory,'victory')
 downloadFile(url_supersal,'supersal')
-
-
