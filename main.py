@@ -5,6 +5,8 @@ import requests
 import os
 from datetime import date
 from bs4 import BeautifulSoup
+import xmltodict, json
+
 
 def getSuperSalUrl():
     url = "http://prices.shufersal.co.il/FileObject/UpdateCategory?catID=0&storeId=413"
@@ -26,6 +28,14 @@ def decompressFile(file_name,file_name_finel):
         with open(file_name_finel, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
     os.remove(file_name)
+    convert_xml_to_JSON(file_name_finel)
+
+def convert_xml_to_JSON(f_in):
+    with open(f_in, 'rb') as myfile:
+        obj = xmltodict.parse(myfile.read())
+    with open(f_in+'.json', 'w', encoding='utf-8') as f_out:
+        a = json.dumps(obj, ensure_ascii=False)
+        f_out.write(a)
 
 today = date.today()
 # mmyydd
@@ -43,3 +53,5 @@ url_supersal = getSuperSalUrl()
 downloadFile(url_mck,'mck')
 downloadFile(url_victory,'victory')
 downloadFile(url_supersal,'supersal')
+
+
